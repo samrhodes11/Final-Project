@@ -1,0 +1,191 @@
+import piplite
+await piplite.install(['numpy'])
+await piplite.install(['pandas'])
+await piplite.install(['seaborn'])
+
+# pandas is a software library written for the Python programming language for data manipulation and analysis.
+import pandas as pd
+#NumPy is a library for the Python programming language, adding support for large, multi-dimensional arrays and matrices, along with a large collection of high-level mathematical functions to operate on these arrays
+import numpy as np
+# Matplotlib is a plotting library for python and pyplot gives us a MatLab like plotting framework. We will use this in our plotter function to plot data.
+import matplotlib.pyplot as plt
+#Seaborn is a Python data visualization library based on matplotlib. It provides a high-level interface for drawing attractive and informative statistical graphics
+import seaborn as sns
+
+from js import fetch
+import io
+
+URL = "https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-DS0321EN-SkillsNetwork/datasets/dataset_part_2.csv"
+resp = await fetch(URL)
+dataset_part_2_csv = io.BytesIO((await resp.arrayBuffer()).to_py())
+df=pd.read_csv(dataset_part_2_csv)
+df.head(20)
+FlightNumber	Date	BoosterVersion	PayloadMass	Orbit	LaunchSite	Outcome	Flights	GridFins	Reused	Legs	LandingPad	Block	ReusedCount	Serial	Longitude	Latitude	Class
+0	1	2010-06-04	Falcon 9	6104.959412	LEO	CCAFS SLC 40	None None	1	False	False	False	NaN	1.0	0	B0003	-80.577366	28.561857	0
+1	2	2012-05-22	Falcon 9	525.000000	LEO	CCAFS SLC 40	None None	1	False	False	False	NaN	1.0	0	B0005	-80.577366	28.561857	0
+2	3	2013-03-01	Falcon 9	677.000000	ISS	CCAFS SLC 40	None None	1	False	False	False	NaN	1.0	0	B0007	-80.577366	28.561857	0
+3	4	2013-09-29	Falcon 9	500.000000	PO	VAFB SLC 4E	False Ocean	1	False	False	False	NaN	1.0	0	B1003	-120.610829	34.632093	0
+4	5	2013-12-03	Falcon 9	3170.000000	GTO	CCAFS SLC 40	None None	1	False	False	False	NaN	1.0	0	B1004	-80.577366	28.561857	0
+5	6	2014-01-06	Falcon 9	3325.000000	GTO	CCAFS SLC 40	None None	1	False	False	False	NaN	1.0	0	B1005	-80.577366	28.561857	0
+6	7	2014-04-18	Falcon 9	2296.000000	ISS	CCAFS SLC 40	True Ocean	1	False	False	True	NaN	1.0	0	B1006	-80.577366	28.561857	1
+7	8	2014-07-14	Falcon 9	1316.000000	LEO	CCAFS SLC 40	True Ocean	1	False	False	True	NaN	1.0	0	B1007	-80.577366	28.561857	1
+8	9	2014-08-05	Falcon 9	4535.000000	GTO	CCAFS SLC 40	None None	1	False	False	False	NaN	1.0	0	B1008	-80.577366	28.561857	0
+9	10	2014-09-07	Falcon 9	4428.000000	GTO	CCAFS SLC 40	None None	1	False	False	False	NaN	1.0	0	B1011	-80.577366	28.561857	0
+10	11	2014-09-21	Falcon 9	2216.000000	ISS	CCAFS SLC 40	False Ocean	1	False	False	False	NaN	1.0	0	B1010	-80.577366	28.561857	0
+11	12	2015-01-10	Falcon 9	2395.000000	ISS	CCAFS SLC 40	False ASDS	1	True	False	True	5e9e3032383ecb761634e7cb	1.0	0	B1012	-80.577366	28.561857	0
+12	13	2015-02-11	Falcon 9	570.000000	ES-L1	CCAFS SLC 40	True Ocean	1	True	False	True	NaN	1.0	0	B1013	-80.577366	28.561857	1
+13	14	2015-04-14	Falcon 9	1898.000000	ISS	CCAFS SLC 40	False ASDS	1	True	False	True	5e9e3032383ecb761634e7cb	1.0	0	B1015	-80.577366	28.561857	0
+14	15	2015-04-27	Falcon 9	4707.000000	GTO	CCAFS SLC 40	None None	1	False	False	False	NaN	1.0	0	B1016	-80.577366	28.561857	0
+15	16	2015-06-28	Falcon 9	2477.000000	ISS	CCAFS SLC 40	None ASDS	1	True	False	True	5e9e3032383ecb6bb234e7ca	1.0	0	B1018	-80.577366	28.561857	0
+16	17	2015-12-22	Falcon 9	2034.000000	LEO	CCAFS SLC 40	True RTLS	1	True	False	True	5e9e3032383ecb267a34e7c7	1.0	0	B1019	-80.577366	28.561857	1
+17	18	2016-01-17	Falcon 9	553.000000	PO	VAFB SLC 4E	False ASDS	1	True	False	True	5e9e3033383ecbb9e534e7cc	1.0	0	B1017	-120.610829	34.632093	0
+18	19	2016-03-04	Falcon 9	5271.000000	GTO	CCAFS SLC 40	False ASDS	1	True	False	True	5e9e3032383ecb6bb234e7ca	1.0	0	B1020	-80.577366	28.561857	0
+19	20	2016-04-08	Falcon 9	3136.000000	ISS	CCAFS SLC 40	True ASDS	1	True	False	True	5e9e3032383ecb6bb234e7ca	2.0	1	B1021	-80.577366	28.561857	1
+
+sns.catplot(y="PayloadMass", x="FlightNumber", hue="Class", data=df, aspect = 5)
+plt.xlabel("Flight Number",fontsize=20)
+plt.ylabel("Pay load Mass (kg)",fontsize=20)
+plt.show()
+[]
+
+sns.catplot(x='FlightNumber', y='LaunchSite', hue='Class', data=df, kind='strip')
+
+sns.set_style('whitegrid')
+plt.xlabel('Flight Number')
+plt.ylabel('Launch Site')
+plt.title('Flight Number vs Launch Site')
+plt.show()
+[]
+
+sns.scatterplot(x='PayloadMass', y='LaunchSite', hue='Class', data=df)
+
+plt.xlabel('Pay Load Mass (kg)')
+plt.ylabel('Launch Site')
+plt.title('Pay Load Mass vs Launch Site')
+
+plt.show()
+[]
+
+success_rate = df.groupby('Orbit')['Class'].sum() / df.groupby('Orbit')['Class'].count()
+sns.barplot(x=success_rate.index, y=success_rate.values)
+plt.xlabel('Orbit Type')
+plt.ylabel('Success Rate')
+plt.title('Success Rate of each Orbit Type')
+
+plt.show()
+[]
+
+sns.scatterplot(x='FlightNumber', y='Orbit', hue='Class', data=df)
+
+plt.xlabel('FlightNumber')
+plt.ylabel('Orbit')
+plt.title('FlightNumber vs Orbit with Class Hue')
+plt.show()
+[]
+
+sns.scatterplot(x='PayloadMass', y='Orbit', hue='Class', data=df)
+
+plt.xlabel('Payload Mass')
+plt.ylabel('Orbit')
+plt.title('Payload Mass vs Orbit with Class Hue')
+plt.show()
+[]
+
+year=[]
+def Extract_year():
+    for i in df["Date"]:
+        year.append(i.split("-")[0])
+    return year
+Extract_year()
+df['Date'] = year
+df.head()
+FlightNumber	Date	BoosterVersion	PayloadMass	Orbit	LaunchSite	Outcome	Flights	GridFins	Reused	Legs	LandingPad	Block	ReusedCount	Serial	Longitude	Latitude	Class
+0	1	2010	Falcon 9	6104.959412	LEO	CCAFS SLC 40	None None	1	False	False	False	NaN	1.0	0	B0003	-80.577366	28.561857	0
+1	2	2012	Falcon 9	525.000000	LEO	CCAFS SLC 40	None None	1	False	False	False	NaN	1.0	0	B0005	-80.577366	28.561857	0
+2	3	2013	Falcon 9	677.000000	ISS	CCAFS SLC 40	None None	1	False	False	False	NaN	1.0	0	B0007	-80.577366	28.561857	0
+3	4	2013	Falcon 9	500.000000	PO	VAFB SLC 4E	False Ocean	1	False	False	False	NaN	1.0	0	B1003	-120.610829	34.632093	0
+4	5	2013	Falcon 9	3170.000000	GTO	CCAFS SLC 40	None None	1	False	False	False	NaN	1.0	0	B1004	-80.577366	28.561857	0
+
+success_rate = df.groupby('Date')['Class'].sum() / df.groupby('Date')['Class'].count()
+
+sns.lineplot(x=success_rate.index, y=success_rate.values)
+
+plt.xlabel('Date')
+plt.ylabel('Success Rate')
+plt.title('Success Rate vs Date')
+
+plt.show()
+[]
+
+features = df[['FlightNumber', 'PayloadMass', 'Orbit', 'LaunchSite', 'Flights', 'GridFins', 'Reused', 'Legs', 'LandingPad', 'Block', 'ReusedCount', 'Serial']]
+features.head()
+FlightNumber	PayloadMass	Orbit	LaunchSite	Flights	GridFins	Reused	Legs	LandingPad	Block	ReusedCount	Serial
+0	1	6104.959412	LEO	CCAFS SLC 40	1	False	False	False	NaN	1.0	0	B0003
+1	2	525.000000	LEO	CCAFS SLC 40	1	False	False	False	NaN	1.0	0	B0005
+2	3	677.000000	ISS	CCAFS SLC 40	1	False	False	False	NaN	1.0	0	B0007
+3	4	500.000000	PO	VAFB SLC 4E	1	False	False	False	NaN	1.0	0	B1003
+4	5	3170.000000	GTO	CCAFS SLC 40	1	False	False	False	NaN	1.0	0	B1004
+
+features_one_hot = features.copy()
+
+features_one_hot = pd.get_dummies(features_one_hot, columns=['Orbit', 'LaunchSite', 'LandingPad', 'Serial'], dtype = int)
+
+print(features_one_hot.head())
+   FlightNumber  PayloadMass  Flights  GridFins  Reused   Legs  Block  \
+0             1  6104.959412        1     False   False  False    1.0   
+1             2   525.000000        1     False   False  False    1.0   
+2             3   677.000000        1     False   False  False    1.0   
+3             4   500.000000        1     False   False  False    1.0   
+4             5  3170.000000        1     False   False  False    1.0   
+
+   ReusedCount  Orbit_ES-L1  Orbit_GEO  ...  Serial_B1048  Serial_B1049  \
+0            0            0          0  ...             0             0   
+1            0            0          0  ...             0             0   
+2            0            0          0  ...             0             0   
+3            0            0          0  ...             0             0   
+4            0            0          0  ...             0             0   
+
+   Serial_B1050  Serial_B1051  Serial_B1054  Serial_B1056  Serial_B1058  \
+0             0             0             0             0             0   
+1             0             0             0             0             0   
+2             0             0             0             0             0   
+3             0             0             0             0             0   
+4             0             0             0             0             0   
+
+   Serial_B1059  Serial_B1060  Serial_B1062  
+0             0             0             0  
+1             0             0             0  
+2             0             0             0  
+3             0             0             0  
+4             0             0             0  
+
+features_one_hot = features_one_hot.astype('float64')
+
+print(features_one_hot.head())
+   FlightNumber  PayloadMass  Flights  GridFins  Reused  Legs  Block  \
+0           1.0  6104.959412      1.0       0.0     0.0   0.0    1.0   
+1           2.0   525.000000      1.0       0.0     0.0   0.0    1.0   
+2           3.0   677.000000      1.0       0.0     0.0   0.0    1.0   
+3           4.0   500.000000      1.0       0.0     0.0   0.0    1.0   
+4           5.0  3170.000000      1.0       0.0     0.0   0.0    1.0   
+
+   ReusedCount  Orbit_ES-L1  Orbit_GEO  ...  Serial_B1048  Serial_B1049  \
+0          0.0          0.0        0.0  ...           0.0           0.0   
+1          0.0          0.0        0.0  ...           0.0           0.0   
+2          0.0          0.0        0.0  ...           0.0           0.0   
+3          0.0          0.0        0.0  ...           0.0           0.0   
+4          0.0          0.0        0.0  ...           0.0           0.0   
+
+   Serial_B1050  Serial_B1051  Serial_B1054  Serial_B1056  Serial_B1058  \
+0           0.0           0.0           0.0           0.0           0.0   
+1           0.0           0.0           0.0           0.0           0.0   
+2           0.0           0.0           0.0           0.0           0.0   
+3           0.0           0.0           0.0           0.0           0.0   
+4           0.0           0.0           0.0           0.0           0.0   
+
+   Serial_B1059  Serial_B1060  Serial_B1062  
+0           0.0           0.0           0.0  
+1           0.0           0.0           0.0  
+2           0.0           0.0           0.0  
+3           0.0           0.0           0.0  
+4           0.0           0.0           0.0  
